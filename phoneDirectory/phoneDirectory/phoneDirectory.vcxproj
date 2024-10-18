@@ -128,17 +128,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="addingAnEntry.c" />
-    <ClCompile Include="fileSearch.c" />
     <ClCompile Include="main.c" />
-    <ClCompile Include="outputRecords.c" />
-    <ClCompile Include="savingData.c" />
+    <ClCompile Include="workingWithAFile.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="addingAnEntry.h" />
-    <ClInclude Include="fileSearch.h" />
-    <ClInclude Include="outputRecords.h" />
-    <ClInclude Include="savingData.h" />
+    <Text Include="phoneDatabase.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="workingWithAFile.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

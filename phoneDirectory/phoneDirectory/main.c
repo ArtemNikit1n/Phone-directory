@@ -38,7 +38,7 @@ void userInput(short *commandNumber, bool *errorCode) {
     free(strCommandNumber);
 }
 
-void callingTheModule(short *commandNumber, bool* errorCode) {
+void callingTheFunction(short *commandNumber, bool* errorCode) {
     if (*commandNumber == 1) {
         printf("1\n");
     }
