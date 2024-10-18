@@ -3,6 +3,8 @@
 #include <locale.h>
 #include <stdlib.h>
 
+#include "workingWithAFile.h"
+
 #define _CRT_SECURE_NO_WARNINGS
 
 void outputOfReferenceInformation() {
@@ -39,11 +41,21 @@ void userInput(short *commandNumber, bool *errorCode) {
 }
 
 void callingTheFunction(short *commandNumber, bool* errorCode) {
-    if (*commandNumber == 1) {
+    struct NameAndPhoneNumber records = {
+    .numberOfEntries = 0,
+    .names = { { '\0' } },
+    .phones = { { '\0' } }
+    };
+
+    if (*commandNumber == 0) {
+        printf("0\n");
+    }
+    else if (*commandNumber == 1) {
         printf("1\n");
     }
     else if (*commandNumber == 2) {
-        printf("2\n");
+        readingFromAFile(&records, "phoneDatabase.txt", &errorCode);
+        printAllAvailableRecords(&records);
     }
     else if (*commandNumber == 3) {
         printf("3\n");
@@ -64,8 +76,7 @@ int main(void) {
     while ((commandNumber < 0 || commandNumber > 6) && errorCode == false) {
         userInput(&commandNumber, &errorCode);
     }
-    callingTheModule(&commandNumber, &errorCode);
-    printf("%d", commandNumber);
+    callingTheFunction(&commandNumber, &errorCode);
 
     return errorCode;
 }
