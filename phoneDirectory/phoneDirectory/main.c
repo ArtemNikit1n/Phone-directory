@@ -5,7 +5,6 @@
 
 #include "workingWithAFile.h"
 
-
 void outputOfReferenceInformation() {
     setlocale(LC_ALL, "Rus");
     printf("0 - выйти");
@@ -17,6 +16,8 @@ void outputOfReferenceInformation() {
 }
 
 short userInput(bool *errorCode) {
+    outputOfReferenceInformation();
+
     char *strCommandNumber = (char *)calloc(10, sizeof(char));
     char *endptrCommandNumber = NULL;
     short commandNumber = -1;
@@ -34,16 +35,15 @@ short userInput(bool *errorCode) {
 
     if (commandNumber < 0 || commandNumber > 6 || *endptrCommandNumber != '\0') {
         printf("Некорректный номер команды, попробуйте ещё раз\n");
-        outputOfReferenceInformation();
         free(strCommandNumber);
-        userInput(&errorCode);
+        userInput(errorCode);
     } else {
         free(strCommandNumber);
         return commandNumber;
     }
 }
 
-void callingTheFunction(short commandNumber, bool* errorCode) {
+void callingTheFunction(short commandNumber, bool *errorCode) {
     struct NameAndPhoneNumber records = {
     .numberOfEntries = 0,
     .names = { { '\0' } },
@@ -55,33 +55,42 @@ void callingTheFunction(short commandNumber, bool* errorCode) {
         return;
     }
     else if (commandNumber == 1) {
-        addANewContact(&records);
+        addANewContact(&records, &errorCode);
+        short commandNumber = userInput(&errorCode);
+        callingTheFunction(commandNumber, &errorCode);
     }
     else if (commandNumber == 2) {
         readingFromAFile(&records, "phoneDatabase.txt", &errorCode);
         printAllAvailableRecords(&records);
+        short commandNumber = userInput(&errorCode) ;
+        callingTheFunction(commandNumber, &errorCode);
     }
     else if (commandNumber == 3) {
         printf("Ещё не готово\n");
+        short commandNumber = userInput(&errorCode);
+        callingTheFunction(commandNumber, &errorCode);
     }
     else if (commandNumber == 4) {
         printf("Ещё не готово\n");
+        short commandNumber = userInput(&errorCode);
+        callingTheFunction(commandNumber, &errorCode);
     }
     else if (commandNumber == 5) {
         printf("Ещё не готово\n");
+        short commandNumber = userInput(&errorCode);
+        callingTheFunction(commandNumber, &errorCode);
     }
 }
 
 int main(void) {
     bool errorCode = false;
+    //short commandNumber = userInput(&errorCode);
 
-    outputOfReferenceInformation();
-    //while ((commandNumber < 0 || commandNumber > 6) && errorCode == false) {
-    //    userInput(&commandNumber, &errorCode);
+    //callingTheFunction(commandNumber, &errorCode);
+    //while (errorCode) {
+    //    callingTheFunction(commandNumber, &errorCode);
     //}
-    short commandNumber = userInput(&errorCode);
-
-    callingTheFunction(commandNumber, &errorCode);
+    printf("MYYAA");
 
     return errorCode;
 }

@@ -6,9 +6,36 @@
 
 #include "workingWithAFile.h"
 
-#define _CRT_SECURE_NO_WARNINGS
-
 void saveToFile();
+
+void addANewContact(struct NameAndPhoneNumber* records, bool *errorCode) {
+    setlocale(LC_ALL, "Rus");
+    char name[MAX_NAME_LENGTH];
+    char phone[MAX_PHONE_LENGTH];
+    bool contactAdded = false;
+
+    printf("Введите имя нового контакта:\n");
+    scanf("%s", &name);
+    if (strlen(name) == sizeof(name) - 1) {
+        printf("Слишком много символов в имени, попробуйте ещё раз\n");
+        *errorCode = true;
+        return;
+    }
+
+    printf("Введите номер телефона:\n");
+    scanf("%s", &phone);
+    if (strlen(name) == sizeof(name) - 1) {
+        printf("Слишком много символов в номере телефона\n");
+        *errorCode = true;
+        return;
+    }
+
+    printf("Проверьте правильно ли введена информация о контакте:\n%s — %s\n", name, phone);
+    printf("0 — Я хочу внести изменения\n1 — Всё верно\n");
+    if (contactAdded = false) {
+        addANewContact(records, errorCode);
+    }
+}
 
 void readingFromAFile(struct NameAndPhoneNumber* records, const char *filename, bool *errorCode) {
     setlocale(LC_ALL, "Rus");
@@ -21,7 +48,7 @@ void readingFromAFile(struct NameAndPhoneNumber* records, const char *filename, 
     }
 
     char name[MAX_NAME_LENGTH];
-    char phone[MAX_PHONE_LENGTH + 1];
+    char phone[MAX_PHONE_LENGTH];
     records->numberOfEntries = 0;
 
     while (fscanf(file, "%s — %s\n", name, phone) == 2) {
@@ -29,7 +56,6 @@ void readingFromAFile(struct NameAndPhoneNumber* records, const char *filename, 
         strcpy(records->phones[records->numberOfEntries], phone);
         records->numberOfEntries++;
     }
-
     fclose(file);
 }
 
