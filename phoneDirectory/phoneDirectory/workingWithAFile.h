@@ -14,13 +14,19 @@ struct NameAndPhoneNumber {
 };
 
 // Добавляет имя и телефон в структуру NameAndPhoneNumber
-void addANewContact(struct NameAndPhoneNumber* records, bool* errorCode);
+void addANewContact(struct NameAndPhoneNumber* records);
 
 // Читает данные, которые уже находились в файле, и добавляет их в структуру NameAndPhoneNumber
 void readingFromAFile(struct NameAndPhoneNumber* records, const char *filename);
 
 // Выводит содержимое структуры NameAndPhoneNumber с номерами и именами
 void printAllAvailableRecords(struct NameAndPhoneNumber* records);
+
+// Поиск телефона в структуре
+void searchByName(struct NameAndPhoneNumber* records);
+
+// Поиск имени в структуре
+void searchByPhone(struct NameAndPhoneNumber* records);
 
 // Функция для сохранения данных из структуры в файл
 void saveToFile(struct NameAndPhoneNumber* records, const char *filename);

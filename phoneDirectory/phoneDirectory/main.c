@@ -49,7 +49,7 @@ void callingTheFunction(struct NameAndPhoneNumber* records, short commandNumber,
     }
     else if (commandNumber == 1) {
         printf("\nДобавление записи\n\n");
-        addANewContact(records, errorCode);
+        addANewContact(records);
         commandNumber = userInput(errorCode);
         callingTheFunction(records, commandNumber, errorCode);
     }
@@ -59,12 +59,12 @@ void callingTheFunction(struct NameAndPhoneNumber* records, short commandNumber,
         callingTheFunction(records, commandNumber, errorCode);
     }
     else if (commandNumber == 3) {
-        printf("Ещё не готово\n");
+        searchByName(records);
         commandNumber = userInput(errorCode);
         callingTheFunction(records, commandNumber, errorCode);
     }
     else if (commandNumber == 4) {
-        printf("Ещё не готово\n");
+        searchByPhone(records);
         commandNumber = userInput(errorCode);
         callingTheFunction(records, commandNumber, errorCode);
     }

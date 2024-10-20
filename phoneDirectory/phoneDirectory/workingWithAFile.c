@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <locale.h>
 #include <stdlib.h>
-#include <windows.h>
+//#include <windows.h>
 #include <string.h>
 #include <assert.h>
 
@@ -22,9 +22,9 @@ void saveToFile(struct NameAndPhoneNumber* records, const char* filename) {
     printf("\nКонтакты успешно сохранены в файл\n");
 }
 
-void addANewContact(struct NameAndPhoneNumber* records, bool *errorCode) {
-    char name[MAX_NAME_LENGTH];
-    char phone[MAX_PHONE_LENGTH];
+void addANewContact(struct NameAndPhoneNumber* records) {
+    char name[MAX_NAME_LENGTH] = { "\0" };
+    char phone[MAX_PHONE_LENGTH] = { "\0" };
     bool theInputIsSuccessful = false;
     bool contactAdded = false;
 
@@ -33,7 +33,8 @@ void addANewContact(struct NameAndPhoneNumber* records, bool *errorCode) {
     fscanf(stdin, "%s", name);
     if (strlen(name) >= MAX_NAME_LENGTH - 1) {
         printf("Слишком много символов в имени, попробуйте ещё раз\n");
-        addANewContact(records, errorCode);
+        addANewContact(records);
+        return;
     }
 
     printf("Введите номер телефона:\n");
@@ -41,7 +42,8 @@ void addANewContact(struct NameAndPhoneNumber* records, bool *errorCode) {
     fscanf(stdin, "%s", phone);
     if (strlen(phone) >= MAX_PHONE_LENGTH - 1) {
         printf("Слишком много символов в номере телефона, попробуйте ещё раз\n");
-        addANewContact(records, errorCode);
+        addANewContact(records);
+        return;
     }
 
     printf("Проверьте правильно ли введена информация о контакте\n%s - %s\n", name, phone);
@@ -64,12 +66,13 @@ void addANewContact(struct NameAndPhoneNumber* records, bool *errorCode) {
     }
 
     if (contactAdded == false) {
-        addANewContact(records, errorCode);
+        addANewContact(records);
     } else {
         strcpy(records->names[records->numberOfEntries], name);
         strcpy(records->phones[records->numberOfEntries], phone);
         records->numberOfEntries++;
         printf("Контакт создан!\n");
+        return;
     }
 }
 
@@ -87,6 +90,54 @@ void readingFromAFile(struct NameAndPhoneNumber* records, const char *filename) 
         records->numberOfEntries++;
     }
     fclose(file);
+}
+
+void searchByName(struct NameAndPhoneNumber* records) {
+    char name[MAX_NAME_LENGTH] = {"\0"};
+    bool thePhoneWasFound = false;
+
+    printf("\nВведите имя искомого контакта:\n\n");
+    getchar();
+    fscanf(stdin, "%s", name);
+    if (strlen(name) >= MAX_NAME_LENGTH - 1) {
+        printf("Слишком много символов в имени, попробуйте ещё раз\n");
+        searchByName(records);
+        return;
+    }
+
+    for (int i = 0; i < records->numberOfEntries; ++i) {
+        if (strcmp(&name, &records->names[i]) == 0) {
+            printf("%s\n", records->phones[i]);
+            thePhoneWasFound = true;
+        }
+    }
+    if (!thePhoneWasFound) {
+        printf("Телефон не найден\n");
+    }
+}
+
+void searchByPhone(struct NameAndPhoneNumber* records) {
+    char phone[MAX_PHONE_LENGTH] = { "\0" };
+    bool theNameWasFound = false;
+
+    printf("\nВведите телефон искомого контакта:\n\n");
+    getchar();
+    fscanf(stdin, "%s", phone);
+    if (strlen(phone) >= MAX_NAME_LENGTH - 1) {
+        printf("Слишком длинный номер телефона, попробуйте ещё раз\n");
+        searchByPhone(records);
+        return;
+    }
+
+    for (int i = 0; i < records->numberOfEntries; ++i) {
+        if (strcmp(&phone, &records->phones[i]) == 0) {
+            printf("%s\n", records->names[i]);
+            theNameWasFound = true;
+        }
+    }
+    if (!theNameWasFound) {
+        printf("Имя не найдено\n");
+    }
 }
 
 void printAllAvailableRecords(struct NameAndPhoneNumber *records) {
