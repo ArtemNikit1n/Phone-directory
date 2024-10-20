@@ -17,7 +17,10 @@ struct NameAndPhoneNumber {
 void addANewContact(struct NameAndPhoneNumber* records, bool* errorCode);
 
 // Читает данные, которые уже находились в файле, и добавляет их в структуру NameAndPhoneNumber
-void readingFromAFile(struct NameAndPhoneNumber* records, const char* filename, bool* errorCode);
+void readingFromAFile(struct NameAndPhoneNumber* records, const char *filename);
 
 // Выводит содержимое структуры NameAndPhoneNumber с номерами и именами
 void printAllAvailableRecords(struct NameAndPhoneNumber* records);
+
+// Функция для сохранения данных из структуры в файл
+void saveToFile(struct NameAndPhoneNumber* records, const char *filename);
